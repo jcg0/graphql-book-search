@@ -52,14 +52,18 @@ const SavedBooks = () => {
     }
 
     try {
-      const response = await removeBook(bookId);
+      const { data } = await removeBook({
+        variables: { bookId },
+      });
 
-      if (!response.ok) {
-        throw new Error("something went wrong!");
-      }
+      console.log(data);
 
-      const updatedUser = await response.json();
-      removeBook(updatedUser);
+      // if (!response.ok) {
+      //   throw new Error("something went wrong!");
+      // }
+
+      // const updatedUser = await response.json();
+      // removeBook(updatedUser);
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
     } catch (err) {
@@ -88,32 +92,33 @@ const SavedBooks = () => {
             : "You have no saved books!"}
         </h2>
         <Row>
-          {userData.savedBooks.map((book) => {
-            return (
-              <Col md="4">
-                <Card key={book.bookId} border="dark">
-                  {book.image ? (
-                    <Card.Img
-                      src={book.image}
-                      alt={`The cover for ${book.title}`}
-                      variant="top"
-                    />
-                  ) : null}
-                  <Card.Body>
-                    <Card.Title>{book.title}</Card.Title>
-                    <p className="small">Authors: {book.authors}</p>
-                    <Card.Text>{book.description}</Card.Text>
-                    <Button
-                      className="btn-block btn-danger"
-                      onClick={() => handleDeleteBook(book.bookId)}
-                    >
-                      Delete this Book!
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
+          {userData.savedBooks &&
+            userData.savedBooks.map((book) => {
+              return (
+                <Col md="4">
+                  <Card key={book.bookId} border="dark">
+                    {book.image ? (
+                      <Card.Img
+                        src={book.image}
+                        alt={`The cover for ${book.title}`}
+                        variant="top"
+                      />
+                    ) : null}
+                    <Card.Body>
+                      <Card.Title>{book.title}</Card.Title>
+                      <p className="small">Authors: {book.authors}</p>
+                      <Card.Text>{book.description}</Card.Text>
+                      <Button
+                        className="btn-block btn-danger"
+                        onClick={() => handleDeleteBook(book.bookId)}
+                      >
+                        Delete this Book!
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              );
+            })}
         </Row>
       </Container>
     </>

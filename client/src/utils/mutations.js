@@ -29,7 +29,7 @@ export const SAVE_BOOK = gql`
     $description: String!
     $title: String!
     $bookId: String!
-    $image: String!
+    $image: ID!
     $link: String
     $authors: [String!]
   ) {
@@ -60,10 +60,8 @@ export const SAVE_BOOK = gql`
 export const REMOVE_BOOK = gql`
   mutation removeBook($bookId: ID!) {
     removeBook(bookId: $bookId) {
-      _id
       username
       email
-      bookCount
       savedBooks {
         bookId
         authors
