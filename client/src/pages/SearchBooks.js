@@ -46,6 +46,7 @@ const SearchBooks = () => {
         title: book.volumeInfo.title,
         description: book.volumeInfo.description,
         image: book.volumeInfo.imageLinks?.thumbnail || "",
+        link: book.volumeInfo.infoLink || "",
       }));
 
       setSearchedBooks(bookData);
@@ -69,7 +70,7 @@ const SearchBooks = () => {
 
     try {
       const { data } = await saveBook({
-        variables: { input: bookToSave },
+        variables: { ...bookToSave },
       });
 
       // if (!response.ok) {

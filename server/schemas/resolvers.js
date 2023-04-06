@@ -40,7 +40,7 @@ const resolvers = {
       return { token, user };
     },
 
-    saveBook: async (
+    savedBooks: async (
       parent,
       { authors, description, title, bookId, image, link },
       context

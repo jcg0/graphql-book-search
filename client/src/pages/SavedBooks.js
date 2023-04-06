@@ -8,9 +8,10 @@ import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
 
 const SavedBooks = () => {
-  // const [data, setUserData] = useState({});
+  // const [userData, setUserData] = useState({});
 
-  const [userData, { error }] = useQuery(GET_ME);
+  const { loading, data } = useQuery(GET_ME);
+  const userData = data?.me || [];
 
   const [removeBook, { err }] = useMutation(REMOVE_BOOK);
 
@@ -80,9 +81,9 @@ const SavedBooks = () => {
       </div>
       <Container>
         <h2 className="pt-5">
-          {userData.savedBooks.length
-            ? `Viewing ${userData.savedBooks.length} saved ${
-                userData.savedBooks.length === 1 ? "book" : "books"
+          {userData.bookCount
+            ? `Viewing ${userData.bookCount} saved ${
+                userData.bookCount === 1 ? "book" : "books"
               }:`
             : "You have no saved books!"}
         </h2>
